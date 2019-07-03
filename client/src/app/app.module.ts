@@ -6,12 +6,14 @@ import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { CoverComponent } from './cover/cover.component';
+import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    CoverComponent
+    CoverComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
