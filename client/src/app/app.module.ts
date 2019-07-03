@@ -7,13 +7,15 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { CoverComponent } from './cover/cover.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { ContactTableComponent } from './contact-table/contact-table.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     CoverComponent,
-    NavbarComponent
+    NavbarComponent,
+    ContactTableComponent
   ],
   imports: [
     BrowserModule,
