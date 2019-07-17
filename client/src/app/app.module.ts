@@ -9,6 +9,8 @@ import { CoverComponent } from './cover/cover.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ContactTableComponent } from './contact-table/contact-table.component';
 import { ContactFormComponent } from './contact-form/contact-form.component';
+import { ROUTING } from './app.routing';
+import { HomeComponent } from './home.component';
 
 @NgModule({
   declarations: [
@@ -17,13 +19,15 @@ import { ContactFormComponent } from './contact-form/contact-form.component';
     CoverComponent,
     NavbarComponent,
     ContactTableComponent,
-    ContactFormComponent
+    ContactFormComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ROUTING
   ],
   providers: [],
   bootstrap: [AppComponent]

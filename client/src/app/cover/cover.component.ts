@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'cb-cover',
@@ -6,14 +7,46 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./cover.component.css']
 })
 export class CoverComponent implements OnInit {
+  isHome: boolean;
+  isAdd: boolean;
+  isEdit: boolean;
+  isSearch: boolean;
 
-  constructor() { }
+  constructor(private router: Router) {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        let href = event.urlAfterRedirects;
+
+        if (href === '/home') {
+          this.isHome = true;
+          this.isAdd = false;
+          this.isEdit = false;
+          this.isSearch = false;
+        }
+        if (href === '/addContact') {
+          this.isAdd = true;
+          this.isHome = false;
+          this.isEdit = false;
+          this.isSearch = false;
+        }
+        if (href.includes('/editContact')) {
+          this.isEdit = true;
+          this.isHome = false;
+          this.isSearch = false;
+          this.isAdd = false;
+        }
+        if (href === '/searchContacts') {
+          this.isSearch = true;
+          this.isHome = false;
+          this.isEdit = false;
+          this.isAdd = false;
+        }
+      }
+    });
+  }
 
   ngOnInit() {
   }
-
-  isHome: boolean = true;
-  isAdd: boolean = false;
-  isEdit: boolean = false;
-  isSearch: boolean = false;
 }
+
+

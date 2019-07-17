@@ -1,4 +1,4 @@
-<div class="table-responsive">
+<div class="table-responsive mt-4">
   <table class="table table-sm table-hover w-75">
     <thead class="thead-light">
       <tr>
@@ -22,7 +22,8 @@
         <td>@mdo</td>
         <td>Family</td>
         <td>Otto</td>
-        <td><button class="btn btn-outline-primary" type="button">Edit</button></td>
+        <td><button class="btn btn-outline-primary" type="button" [routerLink]="['/editContact', '1']"
+            routerLinkActive="router-link-active">Edit</button></td>
         <td><button class="btn btn-outline-danger" type="submit" (click)="onDelete()">Delete</button></td>
       </tr>
       <tr>
