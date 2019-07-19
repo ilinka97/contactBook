@@ -11,6 +11,7 @@ import { ContactTableComponent } from './contact-table/contact-table.component';
 import { ContactFormComponent } from './contact-form/contact-form.component';
 import { ROUTING } from './app.routing';
 import { HomeComponent } from './home.component';
+import { ContactService } from './services/contact.service';
 
 @NgModule({
   declarations: [
@@ -24,12 +25,12 @@ import { HomeComponent } from './home.component';
   ],
   imports: [
     BrowserModule,
-    FormsModule,
     HttpModule,
+    FormsModule,
     ReactiveFormsModule,
     ROUTING
   ],
-  providers: [],
+  providers: [ContactService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

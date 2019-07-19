@@ -14,38 +14,16 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td>ph</td>
-        <td>Mark</td>
-        <td>45465</td>
-        <td>@mdo</td>
-        <td>Family</td>
-        <td>Otto</td>
+      <tr *ngFor="let contact of contacts; let i=index">
+        <th scope="row">{{i}}</th>
+        <td>{{contact.photoUrl}}</td>
+        <td>{{contact.contactName}}</td>
+        <td>{{contact.phoneNumber}}</td>
+        <td>{{contact.email}}</td>
+        <td>{{contact.groupType}}</td>
+        <td>{{contact.address}}</td>
         <td><button class="btn btn-outline-primary" type="button" [routerLink]="['/editContact', '1']"
             routerLinkActive="router-link-active">Edit</button></td>
-        <td><button class="btn btn-outline-danger" type="submit" (click)="onDelete()">Delete</button></td>
-      </tr>
-      <tr>
-        <th scope="row">2</th>
-        <td>ph</td>
-        <td>Jacob</td>
-        <td>64354</td>
-        <td>@fat</td>
-        <td>Friend</td>
-        <td>Thornton</td>
-        <td><button class="btn btn-outline-primary" type="button">Edit</button></td>
-        <td><button class="btn btn-outline-danger" type="submit" (click)="onDelete()">Delete</button></td>
-      </tr>
-      <tr>
-        <th scope="row">3</th>
-        <td>ph</td>
-        <td>Lary</td>
-        <td>647854</td>
-        <td>@ml</td>
-        <td>Work</td>
-        <td>NY</td>
-        <td><button class="btn btn-outline-primary" type="button">Edit</button></td>
         <td><button class="btn btn-outline-danger" type="submit" (click)="onDelete()">Delete</button></td>
       </tr>
     </tbody>
