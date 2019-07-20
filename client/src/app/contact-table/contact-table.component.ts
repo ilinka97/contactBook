@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Contact } from 'app/contact';
 import { ContactService } from 'app/services/contact.service';
 
@@ -9,17 +9,17 @@ import { ContactService } from 'app/services/contact.service';
 })
 export class ContactTableComponent implements OnInit {
   contacts: Contact[];
-  @Input() contactId: number;
+  contactId: number;
 
   constructor(private contactService: ContactService) { }
-
   ngOnInit() {
-    // this.contacts = this.contactService.getContacts();
-    this.contactService.contactChanged.subscribe(
-      (contacts: Contact[]) => this.contacts = contacts
+    this.contactService.getContacts().subscribe(
+      (data: Contact[]) => {
+        this.contacts = data;
+      }
     );
   }
 
-  onDelete(){
+  onDelete() {
   }
 }

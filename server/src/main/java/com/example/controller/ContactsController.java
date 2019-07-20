@@ -13,14 +13,14 @@ import com.example.service.ContactService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping(path="/contacts", produces="application/json")
-@CrossOrigin(origins = "http://localhost:4200")
+@RequestMapping(produces="application/json")
+@CrossOrigin(origins="http://localhost:4200")
 @RequiredArgsConstructor
 public class ContactsController {
 	private final ContactService contactService;
-	
-	@GetMapping
-	public List<Contact> getAllContacts(){
+
+	@GetMapping("contacts")
+	public List<Contact> getAllContacts() {
 		return contactService.findAllContacts();
 	}
 }

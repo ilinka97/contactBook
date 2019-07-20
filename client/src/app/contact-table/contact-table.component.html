@@ -15,8 +15,8 @@
     </thead>
     <tbody>
       <tr *ngFor="let contact of contacts; let i=index">
-        <th scope="row">{{i}}</th>
-        <td>{{contact.photoUrl}}</td>
+        <th scope="row">{{i+1}}</th>
+        <td>{{contact.photoFilename}}</td>
         <td>{{contact.contactName}}</td>
         <td>{{contact.phoneNumber}}</td>
         <td>{{contact.email}}</td>

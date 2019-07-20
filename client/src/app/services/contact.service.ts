@@ -1,24 +1,15 @@
-import { Injectable, EventEmitter } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { Contact } from 'app/contact';
-import 'rxjs/Rx';
-
 
 @Injectable()
 export class ContactService {
-  contacts: Contact[] = [];
-  contactChanged = new EventEmitter<Contact[]>();
+  contactsUrl = 'http://localhost:8080/contacts';
 
-  constructor(private http: Http) { }
+  constructor(private httpClient: HttpClient) { }
 
-  getContacts(){
-     return this.http.get('https://localhost:8080/contacts')
-      .map((response: Response) => response.json())
-      .subscribe(
-        (data: Contact[]) => {
-          this.contacts = data;
-          this.contactChanged.emit(this.contacts);
-        }
-      );
+  getContacts(): Observable<Contact[]> {
+    return this.httpClient.get<Contact[]>(this.contactsUrl);
   }
 }
