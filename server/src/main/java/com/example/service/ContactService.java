@@ -18,8 +18,8 @@ public class ContactService {
 	public List<Contact> findAllContacts() {
 		return contactRepository.findAll();
 	}
-	public void saveContact(Contact contact) {
-		contactRepository.save(contact);
+	public Contact saveContact(Contact contact) {
+		return contactRepository.save(contact);
 	}
 	public List<Contact> findContactsByName(String contactName) {
 		return contactRepository.findByContactNameContaining(contactName);
