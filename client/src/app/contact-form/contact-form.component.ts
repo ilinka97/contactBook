@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ContactService } from 'app/services/contact.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'cb-contact-form',
@@ -7,16 +9,16 @@ import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
   styleUrls: ['./contact-form.component.css']
 })
 export class ContactFormComponent implements OnInit {
-
   contactForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, private contactService: ContactService,
+    private router: Router) { }
 
   ngOnInit() {
     this.initForm();
   }
 
-  private initForm(){
+  private initForm() {
     let contactName: string;
     let phoneNumber: string;
     let email: string;
@@ -25,7 +27,7 @@ export class ContactFormComponent implements OnInit {
     let photoUrl: string;
 
 
-    this.contactForm=this.formBuilder.group({
+    this.contactForm = this.formBuilder.group({
       contactName: [contactName, Validators.required],
       phoneNumber: [phoneNumber, Validators.required],
       email: [email],
@@ -34,7 +36,9 @@ export class ContactFormComponent implements OnInit {
       photoUrl: [photoUrl]
     });
   }
-  onSubmit(){
-    
+  onSubmit() {
+    let newContact = this.contactForm.value;
+    this.contactService.addContact(newContact).subscribe();
+    this.router.navigate(['/home']);
   }
 }
