@@ -20,7 +20,7 @@
         <td>{{contact.contactName}}</td>
         <td>{{contact.phoneNumber}}</td>
         <td>{{contact.email}}</td>
-        <td>{{contact.groupType}}</td>
+        <td>{{contact.groupType | titlecase}}</td>
         <td>{{contact.address}}</td>
         <td><button class="btn btn-outline-primary" type="button" [routerLink]="['/editContact', '1']"
             routerLinkActive="router-link-active">Edit</button></td>

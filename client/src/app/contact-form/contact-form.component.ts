@@ -10,10 +10,10 @@ import { Router } from '@angular/router';
 })
 export class ContactFormComponent implements OnInit {
   contactForm: FormGroup;
+  groups: string[] = ['FAMILY', 'FRIENDS', 'WORK'];
 
   constructor(private formBuilder: FormBuilder, private contactService: ContactService,
-    private router: Router) { }
-
+              private router: Router) { }
   ngOnInit() {
     this.initForm();
   }
@@ -38,7 +38,10 @@ export class ContactFormComponent implements OnInit {
   }
   onSubmit() {
     let newContact = this.contactForm.value;
-    this.contactService.addContact(newContact).subscribe();
-    this.router.navigate(['/home']);
+    this.contactService.addContact(newContact).subscribe(
+      () => {
+        this.router.navigate(['/home']);
+      }
+    );
   }
 }

@@ -19,23 +19,11 @@
   </div>
   <fieldset class="form-group mb-2">
     <legend class="col-form-label pt-0 pl-0">Group</legend>
-    <div class="form-check">
-      <input class="form-check-input" type="radio" name="groupType" id="group" [value]="group"
+    <div class="form-check" *ngFor="let group of groups">
+      <input class="form-check-input" type="radio" name="groupType" id="groupType" [value]="group"
         formControlName="groupType">
-      <label class="form-check-label" for="group">
-        Family
-      </label>
-    </div>
-    <div class="form-check">
-      <input class="form-check-input" type="radio" name="groupType" id="group2" value="Friends">
-      <label class="form-check-label" for="group2">
-        Friends
-      </label>
-    </div>
-    <div class="form-check">
-      <input class="form-check-input" type="radio" name="groupType" id="group3" value="Work">
-      <label class="form-check-label" for="group3">
-        Work
+      <label class="form-check-label" for="groupType">
+        {{group | titlecase}}
       </label>
     </div>
   </fieldset>
