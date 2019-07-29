@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,20 +30,26 @@ public class ContactController {
 	public List<Contact> getAllContacts() {
 		return contactService.findAllContacts();
 	}
-	
+
 	@PostMapping(path="/saveContact", consumes="application/json")
 	@ResponseStatus(HttpStatus.CREATED)
 	public Contact saveContact(@RequestBody Contact contact) {
 		return contactService.saveContact(contact);
 	}
-	
+
 	@GetMapping("/getContact/{id}")
 	public Contact getContactById(@PathVariable Long id) {
 		return contactService.findContactById(id);
 	}
-	
+
 	@PutMapping("/updateContact")
 	public Contact updateContact(@RequestBody Contact contact) {
 		return contactService.saveContact(contact);
+	}
+
+	@DeleteMapping("/deleteContact/{id}")
+	@ResponseStatus(code=HttpStatus.NO_CONTENT)
+	public void deleteContact(@PathVariable Long id) {
+		contactService.deleteContact(id);
 	}
 }
