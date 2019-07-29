@@ -24,7 +24,7 @@
         <td>{{contact.address}}</td>
         <td><button class="btn btn-outline-primary" type="button" [routerLink]="['/editContact', contact.contactId]"
             routerLinkActive="router-link-active">Edit</button></td>
-        <td><button class="btn btn-outline-danger" type="submit" (click)="onDelete()">Delete</button></td>
+        <td><button class="btn btn-outline-danger" type="submit" (click)="onDelete(contact.contactId)">Delete</button></td>
       </tr>
     </tbody>
   </table>

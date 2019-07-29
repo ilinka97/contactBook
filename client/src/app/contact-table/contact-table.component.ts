@@ -9,7 +9,7 @@ import { ContactService } from 'app/services/contact.service';
 })
 export class ContactTableComponent implements OnInit {
   contacts: Contact[];
- 
+
   constructor(private contactService: ContactService) { }
   ngOnInit() {
     this.contactService.getContacts().subscribe(
@@ -19,6 +19,11 @@ export class ContactTableComponent implements OnInit {
     );
   }
 
-  onDelete() {
+  onDelete(contactId: string) {
+    this.contactService.deleteContact(contactId).subscribe(
+      () => {
+        this.ngOnInit();
+      }
+    );
   }
 }
