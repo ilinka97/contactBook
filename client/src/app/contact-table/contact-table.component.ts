@@ -26,4 +26,7 @@ export class ContactTableComponent implements OnInit {
       }
     );
   }
+  onOpenInMaps(address: string){
+    window.open('https://maps.google.com/maps?q='+address);	
+  }
 }
