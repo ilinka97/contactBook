@@ -67,12 +67,21 @@ export class ContactFormComponent implements OnInit, OnDestroy {
     });
   }
   onSubmit() {
-    let newContact = this.contactForm.value;
-    this.contactService.addContact(newContact).subscribe(
-      () => {
-        this.router.navigate(['/home']);
-      }
-    );
+    let formValue = this.contactForm.value;
+    if (this.isNew) {
+      this.contactService.addContact(formValue).subscribe(
+        () => {
+          this.router.navigate(['/home']);
+        }
+      );
+    } else {
+      formValue.contactId = this.contactId;
+      this.contactService.updateContact(formValue).subscribe(
+        () => {
+          this.router.navigate(['/home']);
+        }
+      )
+    }
   }
 
   ngOnDestroy() {

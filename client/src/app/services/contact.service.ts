@@ -23,4 +23,7 @@ export class ContactService {
   getContactById(id: string): Observable<Contact> {
     return this.httpClient.get<Contact>(this.contactsUrl + `/getContact/${id}`);
   }
+  updateContact(contact: Contact): Observable<Contact> {
+    return this.httpClient.put<Contact>(this.contactsUrl + '/updateContact', contact);
+  }
 }
