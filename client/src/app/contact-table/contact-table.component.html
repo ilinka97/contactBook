@@ -22,7 +22,7 @@
         <td>{{contact.email}}</td>
         <td>{{contact.groupType | titlecase}}</td>
         <td>{{contact.address}}</td>
-        <td><button class="btn btn-outline-primary" type="button" [routerLink]="['/editContact', '1']"
+        <td><button class="btn btn-outline-primary" type="button" [routerLink]="['/editContact', contact.contactId]"
             routerLinkActive="router-link-active">Edit</button></td>
         <td><button class="btn btn-outline-danger" type="submit" (click)="onDelete()">Delete</button></td>
       </tr>

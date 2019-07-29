@@ -1,21 +1,44 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ContactService } from 'app/services/contact.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { Contact } from 'app/contact';
 
 @Component({
   selector: 'cb-contact-form',
   templateUrl: './contact-form.component.html',
   styleUrls: ['./contact-form.component.css']
 })
-export class ContactFormComponent implements OnInit {
+export class ContactFormComponent implements OnInit, OnDestroy {
   contactForm: FormGroup;
   groups: string[] = ['FAMILY', 'FRIENDS', 'WORK'];
+  private contactId: string;
+  private contact: Contact;
+  private isNew: boolean = true;
+  private subscription: Subscription;
 
   constructor(private formBuilder: FormBuilder, private contactService: ContactService,
-              private router: Router) { }
+    private router: Router, private route: ActivatedRoute) { }
   ngOnInit() {
-    this.initForm();
+    this.subscription = this.route.params.subscribe(
+      (params: any) => {
+        if (params.hasOwnProperty('id')) {
+          this.isNew = false;
+          this.contactId = params['id'];
+          this.contactService.getContactById(this.contactId).subscribe(
+            (data: Contact) => {
+              this.contact = data;
+              this.initForm();
+            }
+          );
+        } else {
+          this.isNew = true;
+          this.contact = null;
+          this.initForm();
+        }
+      }
+    );
   }
 
   private initForm() {
@@ -26,7 +49,14 @@ export class ContactFormComponent implements OnInit {
     let address: string;
     let photoUrl: string;
 
-
+    if (!this.isNew) {
+      contactName = this.contact.contactName;
+      phoneNumber = this.contact.phoneNumber;
+      email = this.contact.email;
+      groupType = this.contact.groupType;
+      address = this.contact.address;
+      photoUrl = this.contact.photoFilename;
+    }
     this.contactForm = this.formBuilder.group({
       contactName: [contactName, Validators.required],
       phoneNumber: [phoneNumber, Validators.required],
@@ -43,5 +73,9 @@ export class ContactFormComponent implements OnInit {
         this.router.navigate(['/home']);
       }
     );
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

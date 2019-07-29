@@ -9,8 +9,7 @@ import { ContactService } from 'app/services/contact.service';
 })
 export class ContactTableComponent implements OnInit {
   contacts: Contact[];
-  contactId: number;
-
+ 
   constructor(private contactService: ContactService) { }
   ngOnInit() {
     this.contactService.getContacts().subscribe(

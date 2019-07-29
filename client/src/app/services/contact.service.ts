@@ -20,4 +20,7 @@ export class ContactService {
     };
     return this.httpClient.post<Contact>(this.contactsUrl + '/saveContact', contact, httpHeaders);
   }
+  getContactById(id: string): Observable<Contact> {
+    return this.httpClient.get<Contact>(this.contactsUrl + `/getContact/${id}`);
+  }
 }
