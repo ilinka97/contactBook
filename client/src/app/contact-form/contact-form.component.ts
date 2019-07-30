@@ -17,6 +17,7 @@ export class ContactFormComponent implements OnInit, OnDestroy {
   private contact: Contact;
   private isNew: boolean = true;
   private subscription: Subscription;
+  submitted: boolean;
 
   constructor(private formBuilder: FormBuilder, private contactService: ContactService,
     private router: Router, private route: ActivatedRoute) { }
@@ -59,14 +60,22 @@ export class ContactFormComponent implements OnInit, OnDestroy {
     }
     this.contactForm = this.formBuilder.group({
       contactName: [contactName, Validators.required],
-      phoneNumber: [phoneNumber, Validators.required],
-      email: [email],
+      phoneNumber: [phoneNumber, [Validators.required,
+      Validators.pattern("\\(?([0-9]{3})\\)?([ .-]?)([0-9]{3})\\2([0-9]{4})")]],
+      email: [email, Validators.email],
       groupType: [groupType],
       address: [address],
       photoUrl: [photoUrl]
     });
   }
+  get contactName() { return this.contactForm.get('contactName'); }
+  get phoneNumber() { return this.contactForm.get('phoneNumber'); }
+  get email() { return this.contactForm.get('email'); }
   onSubmit() {
+    this.submitted = true;
+    if (this.contactForm.invalid) {
+      return;
+    }
     let formValue = this.contactForm.value;
     if (this.isNew) {
       this.contactService.addContact(formValue).subscribe(
