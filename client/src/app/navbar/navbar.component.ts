@@ -9,11 +9,11 @@ import { Router } from '@angular/router';
 export class NavbarComponent implements OnInit {
 
   constructor(private router: Router) { }
-
   ngOnInit() {
   }
 
-  onSubmit(){
-    this.router.navigate(['/searchContacts'])
+  onSubmit(searchForm: any) {
+    let searchContact = searchForm.searchTerm;
+    this.router.navigate(['/searchContacts'], { queryParams: { contactName: searchContact } });
   }
 }

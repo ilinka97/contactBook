@@ -29,4 +29,8 @@ export class ContactService {
   deleteContact(id: string): Observable<{}> {
     return this.httpClient.delete(this.contactsUrl + `/deleteContact/${id}`);
   }
+  searchContacts(contactName: string): Observable<Contact[]> {
+    contactName = contactName.trim();
+    return this.httpClient.get<Contact[]>(this.contactsUrl + `/searchContacts/?contactName=${contactName}`);
+  }
 }

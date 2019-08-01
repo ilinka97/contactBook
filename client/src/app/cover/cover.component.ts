@@ -35,7 +35,7 @@ export class CoverComponent implements OnInit {
           this.isSearch = false;
           this.isAdd = false;
         }
-        if (href === '/searchContacts') {
+        if (href.includes('/searchContacts')) {
           this.isSearch = true;
           this.isHome = false;
           this.isEdit = false;
