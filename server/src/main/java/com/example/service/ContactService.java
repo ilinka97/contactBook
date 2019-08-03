@@ -19,6 +19,9 @@ public class ContactService {
 		return contactRepository.findAll();
 	}
 	public Contact saveContact(Contact contact) {
+		if (contact.getPhotoFilename() == null) {
+			contact.setPhotoFilename("defaultContact.png");
+		}
 		return contactRepository.save(contact);
 	}
 	public List<Contact> findContactsByName(String contactName) {

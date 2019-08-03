@@ -15,10 +15,17 @@ export class ContactService {
   addContact(contact: Contact): Observable<Contact> {
     const httpHeaders = {
       headers: new HttpHeaders({
-        'Content-Type': 'application/json'
+        'Accept': 'application/json'
       })
     };
-    return this.httpClient.post<Contact>(this.contactsUrl + '/saveContact', contact, httpHeaders);
+    let formData: FormData = new FormData();
+    formData.append('contactName', contact.contactName);
+    formData.append('phoneNumber', contact.phoneNumber);
+    formData.append('email', contact.email);
+    formData.append('groupType', contact.groupType);
+    formData.append('address', contact.address);
+    formData.append('photoFile', contact.photoFile);
+    return this.httpClient.post<Contact>(this.contactsUrl + '/saveContact', formData, httpHeaders);
   }
   getContactById(id: string): Observable<Contact> {
     return this.httpClient.get<Contact>(this.contactsUrl + `/getContact/${id}`);

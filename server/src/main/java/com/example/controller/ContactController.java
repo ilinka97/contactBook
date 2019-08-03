@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -14,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.entities.Contact;
+import com.example.service.ContactPhotoService;
 import com.example.service.ContactService;
 
 import lombok.RequiredArgsConstructor;
@@ -26,15 +29,19 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ContactController {
 	private final ContactService contactService;
+	private final ContactPhotoService photoService;
 
 	@GetMapping
 	public List<Contact> getAllContacts() {
 		return contactService.findAllContacts();
 	}
 
-	@PostMapping(path="/saveContact", consumes="application/json")
+	@PostMapping("/saveContact")
 	@ResponseStatus(HttpStatus.CREATED)
-	public Contact saveContact(@RequestBody Contact contact) {
+	public Contact saveContact(@ModelAttribute Contact contact, @RequestParam(value="photoFile",  required=false)  MultipartFile file) {
+		if (file != null) {
+			contact.setPhotoFilename(photoService.savePhoto(file));
+		}
 		return contactService.saveContact(contact);
 	}
 

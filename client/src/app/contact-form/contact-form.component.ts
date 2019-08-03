@@ -18,6 +18,7 @@ export class ContactFormComponent implements OnInit, OnDestroy {
   private isNew: boolean = true;
   private subscription: Subscription;
   submitted: boolean;
+  fileToUpload: File = null;
 
   constructor(private formBuilder: FormBuilder, private contactService: ContactService,
     private router: Router, private route: ActivatedRoute) { }
@@ -43,20 +44,19 @@ export class ContactFormComponent implements OnInit, OnDestroy {
   }
 
   private initForm() {
-    let contactName: string;
-    let phoneNumber: string;
-    let email: string;
-    let groupType: string;
-    let address: string;
-    let photoUrl: string;
-
+    let contactName: string = '';
+    let phoneNumber: string = '';
+    let email: string = '';
+    let groupType: string = '';
+    let address: string = '';
+    let photoFile: File = null;
     if (!this.isNew) {
       contactName = this.contact.contactName;
       phoneNumber = this.contact.phoneNumber;
       email = this.contact.email;
       groupType = this.contact.groupType;
       address = this.contact.address;
-      photoUrl = this.contact.photoFilename;
+      photoFile = this.contact.photoFile;
     }
     this.contactForm = this.formBuilder.group({
       contactName: [contactName, Validators.required],
@@ -65,18 +65,22 @@ export class ContactFormComponent implements OnInit, OnDestroy {
       email: [email, Validators.email],
       groupType: [groupType],
       address: [address],
-      photoUrl: [photoUrl]
+      photoFile: [photoFile]
     });
   }
   get contactName() { return this.contactForm.get('contactName'); }
   get phoneNumber() { return this.contactForm.get('phoneNumber'); }
   get email() { return this.contactForm.get('email'); }
+  handleFileInput(files: FileList) {
+    this.fileToUpload = files.item(0);
+  }
   onSubmit() {
     this.submitted = true;
     if (this.contactForm.invalid) {
       return;
     }
     let formValue = this.contactForm.value;
+    formValue.photoFile = this.fileToUpload;
     if (this.isNew) {
       this.contactService.addContact(formValue).subscribe(
         () => {
