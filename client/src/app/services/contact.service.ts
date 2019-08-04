@@ -31,7 +31,15 @@ export class ContactService {
     return this.httpClient.get<Contact>(this.contactsUrl + `/getContact/${id}`);
   }
   updateContact(contact: Contact): Observable<Contact> {
-    return this.httpClient.put<Contact>(this.contactsUrl + '/updateContact', contact);
+    let formData: FormData = new FormData();
+    formData.append('contactId', contact.contactId);
+    formData.append('contactName', contact.contactName);
+    formData.append('phoneNumber', contact.phoneNumber);
+    formData.append('email', contact.email);
+    formData.append('groupType', contact.groupType);
+    formData.append('address', contact.address);
+    formData.append('photoFile', contact.photoFile);
+    return this.httpClient.put<Contact>(this.contactsUrl + '/updateContact', formData);
   }
   deleteContact(id: string): Observable<{}> {
     return this.httpClient.delete(this.contactsUrl + `/deleteContact/${id}`);

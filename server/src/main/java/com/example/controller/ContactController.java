@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -51,7 +50,10 @@ public class ContactController {
 	}
 
 	@PutMapping("/updateContact")
-	public Contact updateContact(@RequestBody Contact contact) {
+	public Contact updateContact(@ModelAttribute Contact contact, @RequestParam(value="photoFile",  required=false)  MultipartFile file) {
+		if (file != null) {
+			contact.setPhotoFilename(photoService.savePhoto(file));
+		}
 		return contactService.saveContact(contact);
 	}
 

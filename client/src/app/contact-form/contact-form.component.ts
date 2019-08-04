@@ -89,6 +89,9 @@ export class ContactFormComponent implements OnInit, OnDestroy {
       );
     } else {
       formValue.contactId = this.contactId;
+      if (formValue.groupType == null) {
+        formValue.groupType = '';
+      }
       this.contactService.updateContact(formValue).subscribe(
         () => {
           this.router.navigate(['/home']);
