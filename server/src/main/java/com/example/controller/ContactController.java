@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -59,7 +60,11 @@ public class ContactController {
 
 	@DeleteMapping("/deleteContact/{id}")
 	@ResponseStatus(code=HttpStatus.NO_CONTENT)
-	public void deleteContact(@PathVariable Long id) {
+	public void deleteContact(@PathVariable Long id) throws IOException {
+		Contact contactToDelete = contactService.findContactById(id);
+		if (!(contactToDelete.getPhotoFilename().equals("defaultContact.png"))) {
+			photoService.deletePhoto(contactToDelete.getPhotoFilename());
+		}
 		contactService.deleteContact(id);
 	}
 	
