@@ -1,7 +1,12 @@
 package com.example.controller;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.util.Base64;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -36,6 +41,15 @@ public class ContactController {
 		return contactService.findAllContacts();
 	}
 
+	@GetMapping("/photos/{photoFilename}")
+	public Map<String, String> getImage(@PathVariable String photoFilename) throws IOException {
+		File file = photoService.findOnePhoto(photoFilename);
+		String encodeImage = Base64.getEncoder().withoutPadding().encodeToString(Files.readAllBytes(file.toPath()));
+		Map<String, String> jsonMap = new HashMap<>();
+		jsonMap.put("content", encodeImage);
+		return jsonMap;
+	}
+	
 	@PostMapping("/saveContact")
 	@ResponseStatus(HttpStatus.CREATED)
 	public Contact saveContact(@ModelAttribute Contact contact, @RequestParam(value="photoFile",  required=false)  MultipartFile file) {

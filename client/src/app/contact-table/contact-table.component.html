@@ -16,15 +16,16 @@
     <tbody>
       <tr *ngFor="let contact of contacts; let i=index">
         <th scope="row">{{i+1}}</th>
-        <td>{{contact.photoFilename}}</td>
-        <td>{{contact.contactName}}</td>
-        <td>{{contact.phoneNumber}}</td>
-        <td>{{contact.email}}</td>
-        <td>{{contact.groupType | titlecase}}</td>
+        <td class="w-25"><img class="img-fluid" [src]="contact.photoFilename"></td>
+        <td class="w-25">{{contact.contactName}}</td>
+        <td class="w-25">{{contact.phoneNumber}}</td>
+        <td class="w-25">{{contact.email}}</td>
+        <td class="w-25">{{contact.groupType | titlecase}}</td>
         <td (click)="onOpenInMaps(contact.address)" class="addressLink">{{contact.address}}</td>
         <td><button class="btn btn-outline-primary" type="button" [routerLink]="['/editContact', contact.contactId]"
             routerLinkActive="router-link-active">Edit</button></td>
-        <td><button class="btn btn-outline-danger" type="submit" (click)="onDelete(contact.contactId)">Delete</button></td>
+        <td><button class="btn btn-outline-danger" type="submit" (click)="onDelete(contact.contactId)">Delete</button>
+        </td>
       </tr>
     </tbody>
   </table>
