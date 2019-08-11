@@ -1,1 +1,13 @@
-
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/contact_book?serverTimezone=UTC
+    username: root
+    password: password 
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect    
+file:
+  upload-dir: /Users/Danijel&Ika/Documents/contact-book-images/
