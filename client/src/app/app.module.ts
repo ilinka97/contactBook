@@ -10,9 +10,10 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { ContactTableComponent } from './contact-table/contact-table.component';
 import { ContactFormComponent } from './contact-form/contact-form.component';
 import { ROUTING } from './app.routing';
-import { HomeComponent } from './home.component';
 import { ContactService } from './services/contact.service';
-
+import { RegisterLoginComponent } from './register-login/register-login.component';
+import { HomeComponent } from './home/home.component';
+import { WrapperComponent } from './wrapper.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,7 +22,9 @@ import { ContactService } from './services/contact.service';
     NavbarComponent,
     ContactTableComponent,
     ContactFormComponent,
-    HomeComponent
+    HomeComponent,
+    RegisterLoginComponent,
+    WrapperComponent
   ],
   imports: [
     BrowserModule,
