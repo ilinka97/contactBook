@@ -14,6 +14,8 @@ import { ContactService } from './services/contact.service';
 import { RegisterLoginComponent } from './register-login/register-login.component';
 import { HomeComponent } from './home/home.component';
 import { WrapperComponent } from './wrapper.component';
+import { AuthenticationService } from './services/authentication.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,7 +35,7 @@ import { WrapperComponent } from './wrapper.component';
     ReactiveFormsModule,
     ROUTING
   ],
-  providers: [ContactService],
+  providers: [ContactService, AuthenticationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
