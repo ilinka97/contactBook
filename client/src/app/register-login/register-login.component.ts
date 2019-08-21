@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { AuthenticationService } from "app/services/authentication.service";
 
 @Component({
   selector: "cb-register-login",
@@ -10,7 +11,7 @@ export class RegisterLoginComponent implements OnInit {
   signupForm: FormGroup;
   loginForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder, private authenticationService: AuthenticationService) {}
   ngOnInit() {
     this.initSignupForm();
     this.initLoginForm();
@@ -23,7 +24,7 @@ export class RegisterLoginComponent implements OnInit {
 
     this.signupForm = this.formBuilder.group({
       username: [username, Validators.required],
-      email: [email, Validators.required, Validators.email],
+      email: [email, [Validators.required, Validators.email]],
       password: [password, Validators.required]
     });
   }
@@ -36,6 +37,11 @@ export class RegisterLoginComponent implements OnInit {
       password: [password, Validators.required]
     });
   }
-  onSignup() {}
+  onSignup() {
+    let formValue = this.signupForm.value;
+    this.authenticationService.signup(formValue).subscribe(() => {
+      this.signupForm.reset();
+    });
+  }
   onLogin() {}
 }

@@ -5,7 +5,7 @@ import { Contact } from 'app/models/contact';
 
 @Injectable()
 export class ContactService {
-  contactsUrl = 'http://localhost:8080/contacts';
+  contactsUrl = 'api/contacts';
 
   constructor(private httpClient: HttpClient) { }
 
