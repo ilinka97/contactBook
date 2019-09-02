@@ -3,9 +3,11 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Contact } from 'app/models/contact';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class ContactService {
-  contactsUrl = 'api/contacts';
+  contactsUrl = 'http://localhost:8080/api/contacts';
 
   constructor(private httpClient: HttpClient) { }
 

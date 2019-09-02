@@ -1,5 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { UserService } from "app/services/user.service";
+import { UserCredentials } from "app/models/userCredentials";
 import { AuthenticationService } from "app/services/authentication.service";
 
 @Component({
@@ -11,37 +13,44 @@ export class RegisterLoginComponent implements OnInit {
   signupForm: FormGroup;
   loginForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private authenticationService: AuthenticationService) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private userService: UserService,
+    private authenticationService: AuthenticationService
+  ) {}
   ngOnInit() {
     this.initSignupForm();
     this.initLoginForm();
   }
 
   initSignupForm() {
-    let username: string = "";
+    let userCredentials: UserCredentials = new UserCredentials("", "");
     let email: string = "";
-    let password: string = "";
 
     this.signupForm = this.formBuilder.group({
-      username: [username, Validators.required],
-      email: [email, [Validators.required, Validators.email]],
-      password: [password, Validators.required]
+      userCredentials: this.formBuilder.group({
+        username: [userCredentials.username, Validators.required],
+        password: [userCredentials.password, Validators.required]
+      }),
+      email: [email, [Validators.required, Validators.email]]
     });
   }
   initLoginForm() {
-    let username: string = "";
-    let password: string = "";
+    let credentials: UserCredentials = new UserCredentials("", "");
 
     this.loginForm = this.formBuilder.group({
-      username: [username, Validators.required],
-      password: [password, Validators.required]
+      username: [credentials.username, Validators.required],
+      password: [credentials.password, Validators.required]
     });
   }
   onSignup() {
     let formValue = this.signupForm.value;
-    this.authenticationService.signup(formValue).subscribe(() => {
+    this.userService.signup(formValue).subscribe(() => {
       this.signupForm.reset();
     });
   }
-  onLogin() {}
+  onLogin() {
+    let formValue = this.loginForm.value;
+    this.authenticationService.login(formValue);
+  }
 }

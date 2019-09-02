@@ -1,17 +1,28 @@
 import { Injectable } from "@angular/core";
-import { User } from "app/models/user";
-import { Observable } from "rxjs";
-import { HttpClient } from "@angular/common/http";
+import { Router } from "@angular/router";
+import { UserService } from "./user.service";
+import { UserCredentials } from "app/models/userCredentials";
+import { HttpResponse } from "@angular/common/http";
 
 @Injectable({
   providedIn: "root"
 })
 export class AuthenticationService {
-  usersUrl = '/api/users';
+  static readonly TOKEN_STORAGE_KEY = "token";
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private userService: UserService, private router: Router) {}
 
-  signup(user: User): Observable<User> {
-    return this.httpClient.post<User>(this.usersUrl + "/register", user);
+  public login(credentials: UserCredentials): void {
+    this.userService.login(credentials).subscribe(
+      (response: HttpResponse<any>) => {
+        this.saveToken(response.headers.get("authorization"));
+        this.router.navigate(["/home"]);
+      });
+  }
+  private saveToken(token: string) {
+    localStorage.setItem(AuthenticationService.TOKEN_STORAGE_KEY, token);
+  }
+  public getToken(): string {
+    return localStorage.getItem(AuthenticationService.TOKEN_STORAGE_KEY);
   }
 }
