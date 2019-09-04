@@ -9,3 +9,6 @@
 #loginDiv {
   border-left: 1px solid #a2a2a2;
 }
+#loginFailedMessage {
+  color: rgba(247, 35, 59, 0.89);
+}

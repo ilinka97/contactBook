@@ -12,6 +12,8 @@ import { AuthenticationService } from "app/services/authentication.service";
 export class RegisterLoginComponent implements OnInit {
   signupForm: FormGroup;
   loginForm: FormGroup;
+  loginFailed: boolean = this.authenticationService.isLoggedIn();
+  submitted: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -43,13 +45,20 @@ export class RegisterLoginComponent implements OnInit {
       password: [credentials.password, Validators.required]
     });
   }
+  get username() { return this.loginForm.get("username"); }
+  get password() { return this.loginForm.get("password"); }
   onSignup() {
     let formValue = this.signupForm.value;
-    this.userService.signup(formValue).subscribe(() => {
-      this.signupForm.reset();
+    this.userService.signup(formValue).subscribe(
+      () => {
+        this.signupForm.reset();
     });
   }
   onLogin() {
+    this.submitted = true;
+    if (this.loginForm.invalid) {
+      return;
+    }
     let formValue = this.loginForm.value;
     this.authenticationService.login(formValue);
   }
