@@ -25,4 +25,14 @@ export class AuthenticationService {
   public getToken(): string {
     return localStorage.getItem(AuthenticationService.TOKEN_STORAGE_KEY);
   }
+  public logout(): void {
+    this.userService.logout().subscribe(
+      () =>{
+        localStorage.removeItem(AuthenticationService.TOKEN_STORAGE_KEY);
+        this.router.navigate(["/"]);
+    });
+  }
+  public isLoggedIn(): boolean {
+    return !!this.getToken();
+  }
 }

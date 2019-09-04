@@ -22,4 +22,7 @@ export class UserService {
     };
     return this.httpClient.post(this.usersUrl + '/login', credentials, httpOptions);
   }
+  public logout() {
+    return this.httpClient.post(this.usersUrl + '/logout', {responseType: 'text'});
+  }
 }

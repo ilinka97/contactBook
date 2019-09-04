@@ -13,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
 
 import com.example.filter.AuthenticationFilter;
 import com.example.filter.AuthorizationFilter;
@@ -50,6 +51,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.authenticationEntryPoint(unauthorizedResponse())
 		.and()
             .logout()
+            	.logoutUrl("/api/logout")
+            	.logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler())
         .and()
             .addFilter(new AuthenticationFilter(authenticationManagerBean(), tokenProperties))
             .addFilterAfter(new AuthorizationFilter(tokenProperties), UsernamePasswordAuthenticationFilter.class)
