@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { AuthenticationService } from "app/services/authentication.service";
+import { UserService } from "app/services/user.service";
 
 @Component({
   selector: "cb-header",
@@ -7,11 +8,18 @@ import { AuthenticationService } from "app/services/authentication.service";
   styleUrls: ["./header.component.css"]
 })
 export class HeaderComponent implements OnInit {
-  userName: String = "Name";
+  userName: String = "";
 
-  constructor(private authenticationService: AuthenticationService) {}
-  ngOnInit() {}
-
+  constructor(private authenticationService: AuthenticationService, private userService: UserService) {}
+  ngOnInit() {
+    this.setCurrentUsername();
+  }
+  setCurrentUsername() {
+    this.userService.getCurrentUsername().subscribe(
+      (username: any) => {
+      this.userName = username;
+    });
+  }
   onLogout() {
     this.authenticationService.logout();
   }
