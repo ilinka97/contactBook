@@ -18,13 +18,13 @@ This will get a copy of the project installed locally. To install all of its dep
 To run the server, cd into the server folder and run:
 
 ```
-./mvnw spring-boot:run
+mvn spring-boot:run
 ```
 
 To run the client, cd into the client folder and run:
 
 ```
-npm install && npm start
+ng serve
 ```
 
 ### Prerequisites
