@@ -24,4 +24,7 @@ public class UserService {
 		user.getUserCredentials().setPassword(passwordEncoder.encode(user.getUserCredentials().getPassword()));
 		user.getUserCredentials().setRole(DEFAULT_ROLE);
 	}
+	public User getUserByUsername(String username) {
+		return userRepository.findByUserCredentialsUsername(username).get();
+	}
 }

@@ -10,12 +10,13 @@ import { HttpResponse } from "@angular/common/http";
 export class AuthenticationService {
   static readonly TOKEN_STORAGE_KEY = "token";
 
-  constructor(private userService: UserService, private router: Router) {}
+  constructor(private userService: UserService, private router: Router) { }
 
   public login(credentials: UserCredentials): void {
     this.userService.login(credentials).subscribe(
       (response: HttpResponse<any>) => {
         this.saveToken(response.headers.get("authorization"));
+        sessionStorage.setItem("username", credentials.username);
         this.router.navigate(["/home"]);
       });
   }
@@ -26,10 +27,11 @@ export class AuthenticationService {
     return localStorage.getItem(AuthenticationService.TOKEN_STORAGE_KEY);
   }
   public logout(): void {
-    this.userService.logout().subscribe(
-      () =>{
-        localStorage.removeItem(AuthenticationService.TOKEN_STORAGE_KEY);
-        this.router.navigate(["/"]);
+    this.userService.logout().subscribe(() => {
+      localStorage.removeItem(AuthenticationService.TOKEN_STORAGE_KEY);
+      sessionStorage.removeItem("username");
+      sessionStorage.clear();
+      window.location.reload();
     });
   }
   public isLoggedIn(): boolean {

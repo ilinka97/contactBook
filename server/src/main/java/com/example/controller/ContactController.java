@@ -28,15 +28,16 @@ import com.example.service.ContactService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping(path="/api/contacts", produces="application/json")
+@RequestMapping(path = "/api/contacts", produces = "application/json")
 @RequiredArgsConstructor
 public class ContactController {
+
 	private final ContactService contactService;
 	private final ContactPhotoService photoService;
 
 	@GetMapping
-	public List<Contact> getAllContacts() {
-		return contactService.findAllContacts();
+	public List<Contact> getAllContacts(@RequestParam String username) {
+		return contactService.findAllContactsByUser(username);
 	}
 
 	@GetMapping("/photos/{photoFilename}")
@@ -47,14 +48,15 @@ public class ContactController {
 		jsonMap.put("content", encodeImage);
 		return jsonMap;
 	}
-	
+
 	@PostMapping("/saveContact")
 	@ResponseStatus(HttpStatus.CREATED)
-	public Contact saveContact(@ModelAttribute Contact contact, @RequestParam(value="photoFile",  required=false)  MultipartFile file) {
+	public Contact saveContact(@ModelAttribute Contact contact, @RequestParam(value = "photoFile", required = false) MultipartFile file,
+							  @RequestParam String username) {
 		if (file != null) {
 			contact.setPhotoFilename(photoService.savePhoto(file));
 		}
-		return contactService.saveContact(contact);
+		return contactService.saveContact(contact, username);
 	}
 
 	@GetMapping("/getContact/{id}")
@@ -63,15 +65,16 @@ public class ContactController {
 	}
 
 	@PutMapping("/updateContact")
-	public Contact updateContact(@ModelAttribute Contact contact, @RequestParam(value="photoFile",  required=false)  MultipartFile file) {
+	public Contact updateContact(@ModelAttribute Contact contact,@RequestParam(value = "photoFile", required = false) MultipartFile file, 
+								@RequestParam String username) {
 		if (file != null) {
 			contact.setPhotoFilename(photoService.savePhoto(file));
 		}
-		return contactService.saveContact(contact);
+		return contactService.saveContact(contact, username);
 	}
 
 	@DeleteMapping("/deleteContact/{id}")
-	@ResponseStatus(code=HttpStatus.NO_CONTENT)
+	@ResponseStatus(code = HttpStatus.NO_CONTENT)
 	public void deleteContact(@PathVariable Long id) throws IOException {
 		Contact contactToDelete = contactService.findContactById(id);
 		if (!(contactToDelete.getPhotoFilename().equals("defaultContact.png"))) {
@@ -79,9 +82,9 @@ public class ContactController {
 		}
 		contactService.deleteContact(id);
 	}
-	
+
 	@GetMapping("/searchContacts")
-	public List<Contact> searchContacts(@RequestParam String contactName) {
-		return contactService.findContactsByName(contactName);
+	public List<Contact> searchContacts(@RequestParam String username, @RequestParam String contactName) {
+		return contactService.findContactsByNameWhereUser(username, contactName);
 	}
 }

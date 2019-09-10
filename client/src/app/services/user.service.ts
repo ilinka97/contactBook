@@ -25,7 +25,4 @@ export class UserService {
   public logout() {
     return this.httpClient.post(this.usersUrl + "/logout", { responseType: "text" });
   }
-  public getCurrentUsername() {
-    return this.httpClient.get(this.usersUrl + "/users/username", { responseType: "text" });
-  }
 }
