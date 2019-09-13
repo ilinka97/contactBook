@@ -5,7 +5,7 @@
         <th scope="col">#</th>
         <th scope="col">Photo</th>
         <th scope="col">Name</th>
-        <th scope="col">Phone Number</th>
+        <th scope="col">Phone&nbsp;Number</th>
         <th scope="col">Email</th>
         <th scope="col">Group</th>
         <th scope="col">Address</th>
@@ -22,8 +22,9 @@
         <td class="w-25">{{contact.email}}</td>
         <td class="w-25">{{contact.groupType | titlecase}}</td>
         <td (click)="onOpenInMaps(contact.address)" class="addressLink">{{contact.address}}</td>
-        <td><button class="btn btn-outline-primary" type="button" [routerLink]="['/editContact', contact.contactId]"
-            routerLinkActive="router-link-active">Edit</button></td>
+        <td><button class="btn btn-outline-primary" type="button"
+            [routerLink]="['/home/editContact', contact.contactId]" routerLinkActive="router-link-active">Edit</button>
+        </td>
         <td><button class="btn btn-outline-danger" type="submit" (click)="onDelete(contact.contactId)">Delete</button>
         </td>
       </tr>

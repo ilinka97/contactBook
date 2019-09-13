@@ -23,7 +23,7 @@ export class CoverComponent implements OnInit {
           this.isEdit = false;
           this.isSearch = false;
         }
-        if (href === '/addContact') {
+        if (href.includes('/addContact')) {
           this.isAdd = true;
           this.isHome = false;
           this.isEdit = false;

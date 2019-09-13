@@ -1,0 +1,14 @@
+#landingDiv {
+  background-image: url("assets/bg.jpg");
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-color: #cccccc;
+}
+#loginDiv {
+  border-left: 1px solid #a2a2a2;
+}
+#loginFailedMessage {
+  color: rgba(247, 35, 59, 0.89);
+}

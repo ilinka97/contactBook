@@ -14,6 +14,6 @@ export class NavbarComponent implements OnInit {
 
   onSubmit(searchForm: any) {
     let searchContact = searchForm.searchTerm;
-    this.router.navigate(['/searchContacts'], { queryParams: { contactName: searchContact } });
+    this.router.navigate(['home', 'searchContacts'], { queryParams: { contactName: searchContact } });
   }
 }

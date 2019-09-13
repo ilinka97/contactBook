@@ -1,5 +1,9 @@
 package com.example.service;
 
+import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -18,10 +22,17 @@ public class CustomUserDetailsService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		User user = userRepository.findByUsername(username);
-		if (user != null) {
-			return user;
-		}
-		throw new UsernameNotFoundException("User " + username + " not found");
+		 return userRepository.findByUserCredentialsUsername(username)
+	                .map(this::getUserDetails)
+	                .orElseThrow(() -> new UsernameNotFoundException(String.format("Username: %s not found", username)));
 	}
+	private org.springframework.security.core.userdetails.User getUserDetails(User user) {
+        return new org.springframework.security.core.userdetails.User(
+                user.getUserCredentials().getUsername(),
+                user.getUserCredentials().getPassword(),
+        		getGrantedAuthorities(user));       
+    }
+	private List<GrantedAuthority> getGrantedAuthorities(User user) {
+        return AuthorityUtils.commaSeparatedStringToAuthorityList(user.getUserCredentials().getRole());
+    }
 }

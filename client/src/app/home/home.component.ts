@@ -2,15 +2,12 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'cb-home',
-  template: `
-    <cb-navbar></cb-navbar>
-    <router-outlet></router-outlet>
-  `,
-  styles: []
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  constructor() { } 
 
   ngOnInit() {
   }

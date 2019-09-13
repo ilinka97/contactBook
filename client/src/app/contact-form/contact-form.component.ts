@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ContactService } from 'app/services/contact.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Contact } from 'app/contact';
+import { Contact } from 'app/models/contact';
 
 @Component({
   selector: 'cb-contact-form',
