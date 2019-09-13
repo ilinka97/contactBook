@@ -13,6 +13,8 @@
             <div *ngIf="regSubmitted && regUsername.errors" class="invalid-feedback">
               <div *ngIf="regUsername.errors.required || regUsername.errors.minlength">
                 Username must be at least 6 characters long.</div>
+              <div *ngIf="regUsername.errors.usernameTaken">
+                That username is already taken. Try another!</div>
             </div>
           </div>
           <div class="form-group">

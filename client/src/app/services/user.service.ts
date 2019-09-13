@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { User } from "app/models/user";
 import { Observable } from "rxjs";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { UserCredentials } from "app/models/userCredentials";
 
 @Injectable({
@@ -24,5 +24,9 @@ export class UserService {
   }
   public logout() {
     return this.httpClient.post(this.usersUrl + "/logout", { responseType: "text" });
+  }
+  public getUserByUsername(username: string) {
+    let params = new HttpParams().set("username", username);
+    return this.httpClient.get(this.usersUrl + "/users/username", { params: params });
   }
 }

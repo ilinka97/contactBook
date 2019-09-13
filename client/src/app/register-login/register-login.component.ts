@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { UserService } from "app/services/user.service";
 import { UserCredentials } from "app/models/userCredentials";
 import { AuthenticationService } from "app/services/authentication.service";
-import { MustMatch } from "app/services/match.validator";
+import { MustMatch, ValidateUsername } from "app/services/user.validator";
 
 @Component({
   selector: "cb-register-login",
@@ -34,13 +34,14 @@ export class RegisterLoginComponent implements OnInit {
     let confirmPassword = "";
 
     this.signupForm = this.formBuilder.group({
-        userCredentials: this.formBuilder.group({
-          username: [userCredentials.username,[Validators.required, Validators.minLength(6)]],
-          password: [userCredentials.password,[Validators.required, Validators.minLength(8)]]
-        }),
-        email: [email, [Validators.required, Validators.email]],
-        confirmPassword: [confirmPassword, Validators.required]
-      },{
+      userCredentials: this.formBuilder.group({
+        username: [userCredentials.username, [Validators.required, Validators.minLength(6)],
+                  ValidateUsername(this.userService)],
+        password: [userCredentials.password, [Validators.required, Validators.minLength(8)]]
+      }),
+      email: [email, [Validators.required, Validators.email]],
+      confirmPassword: [confirmPassword, Validators.required]},
+      {
         validator: MustMatch("userCredentials.password", "confirmPassword")
       }
     );
@@ -56,10 +57,11 @@ export class RegisterLoginComponent implements OnInit {
     }
     let formValue = this.signupForm.value;
     delete formValue["confirmPassword"];
-    this.userService.signup(formValue).subscribe(() => {
-      this.signupForm.reset();
-      this.regSubmitted = false;
-      this.isSignedup = true;
+    this.userService.signup(formValue).subscribe(
+      () => {
+        this.signupForm.reset();
+        this.regSubmitted = false;
+        this.isSignedup = true;
     });
   }
 

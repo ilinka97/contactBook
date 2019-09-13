@@ -25,6 +25,6 @@ public class UserService {
 		user.getUserCredentials().setRole(DEFAULT_ROLE);
 	}
 	public User getUserByUsername(String username) {
-		return userRepository.findByUserCredentialsUsername(username).get();
+		return userRepository.findByUserCredentialsUsername(username).orElse(null);
 	}
 }
